@@ -5,7 +5,7 @@ import bufferedReader.Reader;
 import java.io.*;
 import java.util.List;
 
-public class Main {
+public class Main_ex1 {
 
     private static boolean isTriangleValid(int x, int y, int z){
         return (x + y) > z & (x + z) > y & (y + z) > x;
@@ -16,18 +16,29 @@ public class Main {
 
         for(int i = 0; i < input.size(); i++){
 
-            int x = Integer.parseInt(input.get(i));
-            int y = Integer.parseInt(input.get(i + 1));
-            int z = Integer.parseInt(input.get(i + 2));
+            String[] str = input.get(i).split(" ");
+
+            int x = Integer.parseInt(str[0]);
+            int y = Integer.parseInt(str[1]);
+            int z = Integer.parseInt(str[2]);
 
             if(isTriangleValid(x,y,z)){
                 compteur +=1;
             }
-
-            i += 2;
         }
 
         return compteur;
+    }
+
+    public static List<String> cleanInput(List<String> input){
+
+        for (int i = 0; i < input.size(); i++) {
+
+            String[] tab = input.get(i).trim().split(" +");
+            String cleanedString = tab[0] + " " + tab[1] + " " + tab[2];
+            input.set(i,cleanedString);
+        }
+        return input;
     }
     public static void main(String[] args) throws IOException {
 
@@ -37,9 +48,7 @@ public class Main {
 
         List<String> input = reader.readFile(path);
 
-        System.out.println(input);
-
-        //on trim + split pour avoir le bon format et on envoie dans la fonction howManyTriangleValid et hop lé
+        System.out.println(howManyValidTriangle(cleanInput(input)));
 
     }
 }
