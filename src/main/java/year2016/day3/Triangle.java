@@ -44,6 +44,6 @@ public class Triangle {
         int y = this.side2;
         int z = this.side3;
 
-        return (x + y) > z & (x + z) > y & (y + z) > x;
+        return (x + y) > z && (x + z) > y && (y + z) > x;
     }
 }
