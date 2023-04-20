@@ -27,14 +27,13 @@ public class Main {
         int compteur = 0;
         Map<Position,Boolean> map = new HashMap<>();
 
-        for (int i = 0; i < cleanedInput.size(); i++) {
-            List<Position> coveredPositions = cleanedInput.get(i).coveredPositions();
+        for (Zone zone : cleanedInput) {
+            List<Position> coveredPositions = zone.coveredPositions();
 
-            for (int j = 0; j < coveredPositions.size(); j++) {
-                Position key = coveredPositions.get(j);
-                if(map.containsKey(key)){
-                    map.put(key,true);
-                }else {
+            for (Position key : coveredPositions) {
+                if (map.containsKey(key)) {
+                    map.put(key, true);
+                } else {
                     map.put(key, false);
                 }
             }
@@ -53,31 +52,30 @@ public class Main {
     }
 
     private static void whichClaimIsIntact(List<Zone> cleanedInput, Map<Position, Boolean> map) {
-        for (int i = 0; i < cleanedInput.size(); i++) {
-            List<Position> coveredPositions = cleanedInput.get(i).coveredPositions();
+        for (Zone zone : cleanedInput) {
+            List<Position> coveredPositions = zone.coveredPositions();
             boolean isClaimIntact = true;
 
-            for (int j = 0; j < coveredPositions.size(); j++) {
-                Position key = coveredPositions.get(j);
-                if(map.get(key)){
+            for (Position key : coveredPositions) {
+                if (map.get(key)) {
                     isClaimIntact = false;
                     break;
                 }
             }
-            if (isClaimIntact){
-                System.out.println(cleanedInput.get(i).getId());
+            if (isClaimIntact) {
+                System.out.println(zone.getId());
             }
         }
     }
 
     private static List<Zone> cleanInput(List<String> input){
         List<Zone> cleanedInput = new ArrayList<>();
-        int id = 0;
-        int length= 0;
-        int width= 0;
+        int id;
+        int length;
+        int width;
 
-        for (int i = 0; i < input.size(); i++) {
-            int[] sortedInput = sortInput(input.get(i)); // tableau de type [ID, X, Y, LONGUEUR, LARGEUR]
+        for (String s : input) {
+            int[] sortedInput = sortInput(s); // tableau de type [ID, X, Y, LONGUEUR, LARGEUR]
 
             id = sortedInput[0];
             Position position = new Position(
@@ -87,7 +85,7 @@ public class Main {
             length = sortedInput[3];
             width = sortedInput[4];
 
-            Zone zone = new Zone(id,position,length,width);
+            Zone zone = new Zone(id, position, length, width);
             cleanedInput.add(zone);
 
         }
@@ -103,7 +101,7 @@ public class Main {
         int[] finalSortedlist = new int[sortedInput.length];
 
         for (int i = 0; i < sortedInput.length; i++) {
-            finalSortedlist[i] = Integer.valueOf(sortedInput[i]);
+            finalSortedlist[i] = Integer.parseInt(sortedInput[i]);
         }
         return finalSortedlist;
     }
@@ -114,7 +112,7 @@ public class Main {
         s = s.replaceAll(":","");
         s = s.replaceAll(","," ");
         s = s.replaceAll("x"," ");
-        s = s.replaceAll("  "," ");
+        s = s.replaceAll(" +"," ");
         return s;
     }
 
