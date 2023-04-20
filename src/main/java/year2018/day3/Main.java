@@ -40,6 +40,8 @@ public class Main {
             }
         }
 
+        whichClaimIsIntact(cleanedInput,map);
+
         for (Map.Entry<Position,Boolean> entry : map.entrySet())
         {
             if (entry.getValue()){
@@ -48,6 +50,24 @@ public class Main {
         }
 
         return compteur;
+    }
+
+    private static void whichClaimIsIntact(List<Zone> cleanedInput, Map<Position, Boolean> map) {
+        for (int i = 0; i < cleanedInput.size(); i++) {
+            List<Position> coveredPositions = cleanedInput.get(i).coveredPositions();
+            boolean isClaimIntact = true;
+
+            for (int j = 0; j < coveredPositions.size(); j++) {
+                Position key = coveredPositions.get(j);
+                if(map.get(key)){
+                    isClaimIntact = false;
+                    break;
+                }
+            }
+            if (isClaimIntact){
+                System.out.println(cleanedInput.get(i).getId());
+            }
+        }
     }
 
     private static List<Zone> cleanInput(List<String> input){
