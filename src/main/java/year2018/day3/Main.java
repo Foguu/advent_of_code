@@ -5,45 +5,41 @@ import year2015.day3.Position;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        String path = "C:\\BM\\projets\\advent_of_code\\src\\main\\java\\year2018\\day3\\inputs\\input.txt";
+        String path = "src/main/java/year2018/day3/inputs/input.txt";
         Reader reader = new Reader();
-        List<String> input = reader.readFile(path);
 
-        List<Zone> cleanedInput = cleanInput(input);
+        List<Zone> cleanedInput = reader.readFile(path).stream()
+                .map(line->cleanInput(List.of(line)))
+                .map(zones -> zones.get(0))
+                .collect(Collectors.toList());
 
         int numberOfMatchingPositions = howManyMatchingPos(cleanedInput);
 
         System.out.println("Il y a " + numberOfMatchingPositions + " zone(s) qui sont superposées.");
-
-
     }
 
     private static int howManyMatchingPos(List<Zone> cleanedInput) {
         int compteur = 0;
-        Map<Position,Boolean> map = new HashMap<>();
+        Map<Position, Boolean> map = new HashMap<>();
 
         for (Zone zone : cleanedInput) {
             List<Position> coveredPositions = zone.coveredPositions();
 
             for (Position key : coveredPositions) {
-                if (map.containsKey(key)) {
-                    map.put(key, true);
-                } else {
-                    map.put(key, false);
-                }
+                map.put(key, map.containsKey(key));
             }
         }
 
-        whichClaimIsIntact(cleanedInput,map);
+        whichClaimIsIntact(cleanedInput, map); // PARTIE 2
 
-        for (Map.Entry<Position,Boolean> entry : map.entrySet())
-        {
-            if (entry.getValue()){
+        for (Map.Entry<Position, Boolean> entry : map.entrySet()) {
+            if (entry.getValue()) {
                 compteur += 1;
             }
         }
@@ -51,7 +47,7 @@ public class Main {
         return compteur;
     }
 
-    private static void whichClaimIsIntact(List<Zone> cleanedInput, Map<Position, Boolean> map) {
+    private static void whichClaimIsIntact(List<Zone> cleanedInput, Map<Position, Boolean> map) { // PARTIE 2
         for (Zone zone : cleanedInput) {
             List<Position> coveredPositions = zone.coveredPositions();
             boolean isClaimIntact = true;
@@ -68,7 +64,7 @@ public class Main {
         }
     }
 
-    private static List<Zone> cleanInput(List<String> input){
+    private static List<Zone> cleanInput(List<String> input) {
         List<Zone> cleanedInput = new ArrayList<>();
         int id;
         int length;
@@ -98,21 +94,25 @@ public class Main {
         s = replaceCharInInput(s);
 
         String[] sortedInput = s.split(" ");
-        int[] finalSortedlist = new int[sortedInput.length];
 
-        for (int i = 0; i < sortedInput.length; i++) {
-            finalSortedlist[i] = Integer.parseInt(sortedInput[i]);
-        }
-        return finalSortedlist;
+        return Arrays.stream(sortedInput)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+//        int[] finalSortedlist = new int[sortedInput.length];
+//
+//        for (int i = 0; i < sortedInput.length; i++) {
+//            finalSortedlist[i] = Integer.parseInt(sortedInput[i]);
+//        }
+//        return finalSortedlist;
     }
 
     private static String replaceCharInInput(String s) {
-        s = s.replaceAll("#","");
-        s = s.replaceAll("@","");
-        s = s.replaceAll(":","");
-        s = s.replaceAll(","," ");
-        s = s.replaceAll("x"," ");
-        s = s.replaceAll(" +"," ");
+        s = s.replaceAll("#", "");
+        s = s.replaceAll("@", "");
+        s = s.replaceAll(":", "");
+        s = s.replaceAll(",", " ");
+        s = s.replaceAll("x", " ");
+        s = s.replaceAll(" +", " ");
         return s;
     }
 
