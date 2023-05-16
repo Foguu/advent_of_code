@@ -1,0 +1,19 @@
+
+C
+java:S5411*"(Use a primitive boolean expression here.( „–žùÿÿÿÿ
+C
+java:S54118"(Use a primitive boolean expression here.(ÓÌ•ñøÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ä´ €øÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(€óîýøÿÿÿÿ
+N	java:S106>"9Replace this use of System.out or System.err by a logger.(¦¼â¾
+Q	java:S125e"<This block of commented-out lines of code should be removed.(×þÚÐ
+^
+java:S5361n"HReplace this call to "replaceAll()" by a call to the "replace()" method.(˜çÑ
+c
+java:S5361o"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ÅŠ›Êøÿÿÿÿ
+^
+java:S5361p"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ñË„€
+c
+java:S5361q"HReplace this call to "replaceAll()" by a call to the "replace()" method.(‡¤šºÿÿÿÿÿ
+c
+java:S5361r"HReplace this call to "replaceAll()" by a call to the "replace()" method.(üŒð×ýÿÿÿÿ
